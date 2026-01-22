@@ -21,7 +21,15 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Results
+# Simulation Results (generated plots and data)
 results/
+output/
 *.png
 *.pdf
+*.csv
+*.log
+
+# Documentation (keep local only)
+Explain.md
+SCHEDULERS.md
+CONFIG_GUIDE.md
