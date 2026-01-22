@@ -2,7 +2,7 @@
 Scheduling algorithms for 5G NR downlink
 """
 import numpy as np
-from config import ALPHA, BETA, GAMMA
+from config import ALPHA, BETA, GAMMA, MAX_BUFFER_SIZE
 
 
 class Scheduler:
@@ -94,7 +94,7 @@ class HybridAdaptiveScheduler(Scheduler):
     """Advanced hybrid scheduler with dynamic mode switching"""
     def __init__(self):
         super().__init__("Hybrid Adaptive")
-        self.urgency_threshold = 0.7  # Switch to urgency mode at 70% of delay threshold
+        self.urgency_threshold = 0.6  # Switch to urgency mode at 60% of delay threshold
     
     def select_ue(self, ues, current_time):
         """Hybrid approach: urgency-first for critical packets, then optimized selection"""
@@ -119,7 +119,7 @@ class HybridAdaptiveScheduler(Scheduler):
                 # Prioritize packets approaching deadline
                 if urgency_ratio > self.urgency_threshold:
                     # Urgency score: higher for URLLC and closer to deadline
-                    urgency_score = urgency_ratio * ue.priority * ue.cqi
+                    urgency_score = (urgency_ratio ** 2) * ue.priority * ue.cqi
                     
                     if urgency_score > best_urgency:
                         best_urgency = urgency_score
@@ -146,14 +146,15 @@ class HybridAdaptiveScheduler(Scheduler):
                 
                 # Component 3: QoS factor (delay-based with priority)
                 delay = ue.get_head_of_line_delay(current_time)
-                qos_factor = (1 + delay / ue.delay_threshold) * ue.priority
+                qos_factor = (1 + delay / ue.delay_threshold) * (ue.priority ** 1.5)
                 
-                # Component 4: Buffer occupancy (prioritize fuller buffers)
-                buffer_factor = 1 + (ue.buffer_size / 10000) * 0.5
+                # Component 4: Buffer occupancy (prioritize fuller buffers more aggressively)
+                buffer_ratio = ue.buffer_size / MAX_BUFFER_SIZE
+                buffer_factor = 1 + buffer_ratio * 0.8
                 
                 # Combined metric with adaptive weights
-                metric = (channel_efficiency ** 0.4) * (fairness_factor ** 0.2) * \
-                         (qos_factor ** 0.3) * (buffer_factor ** 0.1)
+                metric = (channel_efficiency ** 0.35) * (fairness_factor ** 0.25) * \
+                         (qos_factor ** 0.25) * (buffer_factor ** 0.15)
                 
                 if metric > best_metric:
                     best_metric = metric

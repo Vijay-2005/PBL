@@ -3,7 +3,8 @@ Main execution script for 5G NR Scheduling Simulation
 """
 import numpy as np
 from simulator import Simulator
-from schedulers import RoundRobinScheduler, ProportionalFairScheduler, QoSAwareScheduler
+from schedulers import (RoundRobinScheduler, ProportionalFairScheduler, 
+                        MLWDFScheduler, HybridAdaptiveScheduler, EXPRuleScheduler)
 from visualizer import Visualizer
 from config import NUM_UES, SIMULATION_TIME, PLOT_RESULTS
 
@@ -23,7 +24,9 @@ def main():
     schedulers = [
         RoundRobinScheduler(),
         ProportionalFairScheduler(),
-        QoSAwareScheduler()
+        MLWDFScheduler(),
+        EXPRuleScheduler(),
+        HybridAdaptiveScheduler()
     ]
     
     results = []

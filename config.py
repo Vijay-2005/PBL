@@ -27,8 +27,8 @@ BETA = 0.4   # Delay weight
 GAMMA = 0.2  # Priority weight
 
 # Buffer Parameters
-MAX_BUFFER_SIZE = 10000  # bytes
-PACKET_ARRIVAL_RATE = 0.7  # probability per TTI
+MAX_BUFFER_SIZE = 15000  # bytes (increased to reduce overflow)
+PACKET_ARRIVAL_RATE = 0.5  # probability per TTI (reduced load)
 
 # Output
 VERBOSE = False

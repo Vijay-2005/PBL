@@ -25,16 +25,19 @@ class Visualizer:
         schedulers = [r['scheduler'] for r in self.results]
         throughputs = [r['avg_throughput'] for r in self.results]
         
-        plt.figure(figsize=(8, 5))
-        bars = plt.bar(schedulers, throughputs, color=['#3498db', '#e74c3c', '#2ecc71'], alpha=0.8)
+        colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6']
+        
+        plt.figure(figsize=(10, 5))
+        bars = plt.bar(schedulers, throughputs, color=colors[:len(schedulers)], alpha=0.8)
         plt.ylabel('Average Throughput (bytes/TTI)', fontsize=11)
         plt.title('Average Throughput Comparison', fontsize=13, fontweight='bold')
+        plt.xticks(rotation=15, ha='right')
         plt.grid(axis='y', alpha=0.3)
         
         for bar in bars:
             height = bar.get_height()
             plt.text(bar.get_x() + bar.get_width()/2., height,
-                    f'{height:.1f}', ha='center', va='bottom', fontsize=10)
+                    f'{height:.1f}', ha='center', va='bottom', fontsize=9)
         
         plt.tight_layout()
     
@@ -43,16 +46,19 @@ class Visualizer:
         schedulers = [r['scheduler'] for r in self.results]
         delays = [r['avg_delay'] for r in self.results]
         
-        plt.figure(figsize=(8, 5))
-        bars = plt.bar(schedulers, delays, color=['#3498db', '#e74c3c', '#2ecc71'], alpha=0.8)
+        colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6']
+        
+        plt.figure(figsize=(10, 5))
+        bars = plt.bar(schedulers, delays, color=colors[:len(schedulers)], alpha=0.8)
         plt.ylabel('Average Packet Delay (TTI)', fontsize=11)
         plt.title('Average Packet Delay Comparison', fontsize=13, fontweight='bold')
+        plt.xticks(rotation=15, ha='right')
         plt.grid(axis='y', alpha=0.3)
         
         for bar in bars:
             height = bar.get_height()
             plt.text(bar.get_x() + bar.get_width()/2., height,
-                    f'{height:.2f}', ha='center', va='bottom', fontsize=10)
+                    f'{height:.2f}', ha='center', va='bottom', fontsize=9)
         
         plt.tight_layout()
     
@@ -61,16 +67,19 @@ class Visualizer:
         schedulers = [r['scheduler'] for r in self.results]
         loss_ratios = [r['packet_loss_ratio'] * 100 for r in self.results]
         
-        plt.figure(figsize=(8, 5))
-        bars = plt.bar(schedulers, loss_ratios, color=['#3498db', '#e74c3c', '#2ecc71'], alpha=0.8)
+        colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6']
+        
+        plt.figure(figsize=(10, 5))
+        bars = plt.bar(schedulers, loss_ratios, color=colors[:len(schedulers)], alpha=0.8)
         plt.ylabel('Packet Loss Ratio (%)', fontsize=11)
         plt.title('Packet Loss Ratio Comparison', fontsize=13, fontweight='bold')
+        plt.xticks(rotation=15, ha='right')
         plt.grid(axis='y', alpha=0.3)
         
         for bar in bars:
             height = bar.get_height()
             plt.text(bar.get_x() + bar.get_width()/2., height,
-                    f'{height:.2f}%', ha='center', va='bottom', fontsize=10)
+                    f'{height:.2f}%', ha='center', va='bottom', fontsize=9)
         
         plt.tight_layout()
     
@@ -79,17 +88,20 @@ class Visualizer:
         schedulers = [r['scheduler'] for r in self.results]
         fairness = [r['fairness_index'] for r in self.results]
         
-        plt.figure(figsize=(8, 5))
-        bars = plt.bar(schedulers, fairness, color=['#3498db', '#e74c3c', '#2ecc71'], alpha=0.8)
+        colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6']
+        
+        plt.figure(figsize=(10, 5))
+        bars = plt.bar(schedulers, fairness, color=colors[:len(schedulers)], alpha=0.8)
         plt.ylabel("Jain's Fairness Index", fontsize=11)
         plt.title("Fairness Comparison", fontsize=13, fontweight='bold')
         plt.ylim([0, 1.1])
+        plt.xticks(rotation=15, ha='right')
         plt.grid(axis='y', alpha=0.3)
         
         for bar in bars:
             height = bar.get_height()
             plt.text(bar.get_x() + bar.get_width()/2., height,
-                    f'{height:.3f}', ha='center', va='bottom', fontsize=10)
+                    f'{height:.3f}', ha='center', va='bottom', fontsize=9)
         
         plt.tight_layout()
     
